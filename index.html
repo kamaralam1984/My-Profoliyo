@@ -522,6 +522,11 @@
     #introTapBtn{ font-size:11px; padding:13px 18px; gap:7px; letter-spacing:0.04em; }
     #introSkip{ font-size:10px; padding:7px 12px; right:12px; bottom:12px; }
   }
+  /* Source video is 16:9 landscape; on portrait/narrow screens "cover" crops its
+     on-screen text badly, so switch to "contain" (full frame, letterboxed) there. */
+  @media (max-width:768px), (max-aspect-ratio:1/1){
+    #introVideo{ object-fit:contain; }
+  }
 </style>
 </head>
 <body class="intro-lock">
