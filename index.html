@@ -444,7 +444,8 @@
   .os-card.flip:hover{ transform:none; }
   .os-card.flip::before{ display:none; }
   .flip-inner{ position:relative; width:100%; height:100%; min-height:inherit; transform-style:preserve-3d; transition:transform .8s cubic-bezier(.2,.7,.2,1); }
-  .os-card.flip:hover .flip-inner, .os-card.flip:focus-visible .flip-inner{ transform:rotateY(180deg); }
+  @media (hover:hover){ .os-card.flip:hover .flip-inner{ transform:rotateY(180deg); } }
+  .os-card.flip:focus-visible .flip-inner, .os-card.flip.flipped .flip-inner{ transform:rotateY(180deg); }
   .flip-front, .flip-back{ position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; }
   .flip-front{ background:var(--cine-panel); border:1px solid var(--hairline); padding:22px 14px 18px; }
   .flip-front::before{ content:counter(os, decimal-leading-zero); position:absolute; top:8px; left:10px; font-family:var(--font-mono); font-size:10px; color:var(--film-paper-faint); letter-spacing:0.1em; }
@@ -581,14 +582,107 @@
     #introVideo{ object-fit:contain; }
   }
 
+
+
+  /* ---- fire extras ---- */
+  /* 2. heat shimmer on the burning photos (desktop/tablet) */
+  @media (min-width:701px){ html[data-theme="fire"] .photo-frame img{ filter:url(#heatHaze); } }
+  /* 3. progress bar becomes a burning fuse */
+  html[data-theme="fire"] .film-progress{ height:3px; bottom:-2px; background:linear-gradient(90deg,#140804 0%,#2a1209 70%,#7a2a08 92%,#ff8a1f 100%); box-shadow:0 0 6px rgba(255,100,20,.5); overflow:visible; }
+  html[data-theme="fire"] .film-progress::after{ content:""; position:absolute; right:-7px; top:50%; width:14px; height:14px; transform:translateY(-50%); border-radius:50%;
+    background:radial-gradient(circle,#fffbe6 0 18%,#ffd05a 32%,#ff7a1a 52%,rgba(255,80,0,0) 72%); animation:fuseSpark .12s steps(2) infinite alternate; }
+  @keyframes fuseSpark{ from{ transform:translateY(-50%) scale(.85); opacity:.85; } to{ transform:translateY(-50%) scale(1.25); opacity:1; } }
+  /* 5. charred card edges, ember cracks on hover/focus/tap */
+  html[data-theme="fire"] .frame, html[data-theme="fire"] .product-card, html[data-theme="fire"] .flip-front, html[data-theme="fire"] .kvl-step, html[data-theme="fire"] .os-card:not(.flip){
+    position:relative; border-color:#3a1a0c;
+    box-shadow:inset 0 0 0 1px rgba(20,6,2,.9), inset 0 0 26px rgba(0,0,0,.9), inset 0 0 8px rgba(140,50,10,.35);
+    background-image:radial-gradient(ellipse at 50% 45%, transparent 55%, rgba(8,2,0,.6) 100%);
+  }
+  html[data-theme="fire"] .frame::after, html[data-theme="fire"] .product-card::after, html[data-theme="fire"] .flip-front::after, html[data-theme="fire"] .kvl-step::after, html[data-theme="fire"] .os-card:not(.flip)::after{
+    content:""; position:absolute; inset:0; pointer-events:none; background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%20200%20200%27%20preserveAspectRatio%3D%27none%27%3E%3Cg%20fill%3D%27none%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%3Cg%20stroke%3D%27%23ff6a12%27%20stroke-width%3D%272.2%27%3E%3Cpath%20d%3D%27M0%2018%20L14%2022%20L22%2014%20L36%2020%20L44%2012%27/%3E%3Cpath%20d%3D%27M200%2030%20L186%2034%20L180%2026%20L166%2032%27/%3E%3Cpath%20d%3D%27M0%20120%20L10%20116%20L16%20126%20L28%20122%27/%3E%3Cpath%20d%3D%27M200%20150%20L190%20156%20L182%20148%20L170%20154%20L162%20146%27/%3E%3Cpath%20d%3D%27M40%20200%20L46%20188%20L58%20192%20L64%20182%27/%3E%3Cpath%20d%3D%27M150%20200%20L144%20190%20L132%20194%20L126%20184%20L116%20188%27/%3E%3Cpath%20d%3D%27M120%200%20L124%2010%20L136%208%20L140%2018%27/%3E%3Cpath%20d%3D%27M10%20200%20L18%20194%27/%3E%3Cpath%20d%3D%27M190%200%20L184%208%20L176%206%27/%3E%3C/g%3E%3Cg%20stroke%3D%27%23ffd27a%27%20stroke-width%3D%27.9%27%3E%3Cpath%20d%3D%27M0%2018%20L14%2022%20L22%2014%20L36%2020%20L44%2012%27/%3E%3Cpath%20d%3D%27M200%2030%20L186%2034%20L180%2026%20L166%2032%27/%3E%3Cpath%20d%3D%27M0%20120%20L10%20116%20L16%20126%20L28%20122%27/%3E%3Cpath%20d%3D%27M200%20150%20L190%20156%20L182%20148%20L170%20154%20L162%20146%27/%3E%3Cpath%20d%3D%27M40%20200%20L46%20188%20L58%20192%20L64%20182%27/%3E%3Cpath%20d%3D%27M150%20200%20L144%20190%20L132%20194%20L126%20184%20L116%20188%27/%3E%3Cpath%20d%3D%27M120%200%20L124%2010%20L136%208%20L140%2018%27/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") center/100% 100% no-repeat; opacity:0; transition:opacity .45s ease;
+    filter:drop-shadow(0 0 3px rgba(255,110,20,.9)) drop-shadow(0 0 8px rgba(255,60,0,.6));
+  }
+  html[data-theme="fire"] .frame:hover::after, html[data-theme="fire"] .product-card:hover::after, html[data-theme="fire"] .os-card.flip:hover .flip-front::after, html[data-theme="fire"] .kvl-step:hover::after, html[data-theme="fire"] .os-card:not(.flip):hover::after,
+  html[data-theme="fire"] .frame:active::after, html[data-theme="fire"] .product-card:active::after, html[data-theme="fire"] .kvl-step:active::after, html[data-theme="fire"] .product-card:focus-visible::after{ opacity:1; animation:emberPulse 1.3s ease-in-out infinite; }
+  @keyframes emberPulse{ 0%,100%{ opacity:.75; } 50%{ opacity:1; } }
+  html[data-theme="fire"] .frame:hover, html[data-theme="fire"] .product-card:hover, html[data-theme="fire"] .kvl-step:hover{ border-color:#7a2e0c; }
+  /* 7. matchstick buttons */
+  html[data-theme="fire"] .btn{ position:relative; overflow:visible; transition:box-shadow .3s ease, border-color .3s ease; }
+  html[data-theme="fire"] .btn::after{ content:""; position:absolute; left:-3px; top:50%; width:12px; height:22px; margin-top:-17px; pointer-events:none;
+    border-radius:50% 50% 50% 50% / 62% 62% 38% 38%; transform-origin:50% 90%; transform:scale(0); opacity:0;
+    background:radial-gradient(ellipse at 50% 72%,#fffbe8 0 14%,#ffe08a 24%,#ffa531 42%,#ff5a0f 60%,rgba(255,60,0,0) 76%); filter:blur(.3px);
+    transition:transform .25s cubic-bezier(.2,1.4,.4,1), opacity .2s ease; }
+  html[data-theme="fire"] .btn::before{ content:""; position:absolute; left:-1px; top:50%; width:8px; height:8px; margin-top:-4px; border-radius:50%; background:#5a1a08; box-shadow:0 0 0 1px #2a0c04; opacity:0; transition:opacity .2s ease; pointer-events:none; }
+  html[data-theme="fire"] .btn:hover::after, html[data-theme="fire"] .btn:focus-visible::after, html[data-theme="fire"] .btn:active::after{ transform:scale(1); opacity:1; animation:matchFlame .5s ease-in-out infinite alternate .25s; }
+  html[data-theme="fire"] .btn:hover::before, html[data-theme="fire"] .btn:focus-visible::before, html[data-theme="fire"] .btn:active::before{ opacity:1; }
+  html[data-theme="fire"] .btn:hover, html[data-theme="fire"] .btn:focus-visible{ box-shadow:0 0 18px rgba(255,110,20,.45), inset 0 0 12px rgba(255,90,10,.18); border-color:#ff7a1a; }
+  @keyframes matchFlame{ 0%{ transform:scale(1) skewX(0deg); } 30%{ transform:scale(1.06,1.12) skewX(-4deg); } 60%{ transform:scale(.96,1.04) skewX(3deg); } 100%{ transform:scale(1.03,1.16) skewX(-2deg); } }
+  @media (prefers-reduced-motion: reduce){ html[data-theme="fire"] .film-progress::after, html[data-theme="fire"] .btn::after, html[data-theme="fire"] [class]::after{ animation:none !important; } html[data-theme="fire"] .photo-frame img{ filter:none !important; } }
+  /* ================= RESPONSIVE POLISH ================= */
+  .product-grid{ grid-template-columns:repeat(4,minmax(0,1fr)); }
+  .product-url{ overflow-wrap:anywhere; }
+  .credits-row{ flex-wrap:wrap; }
+  .credits-val{ overflow-wrap:anywhere; min-width:0; }
+  img, video{ max-width:100%; }
+  @media (max-width:1100px){ .product-grid{ grid-template-columns:repeat(3,minmax(0,1fr)); } }
+  @media (max-width:960px){ .product-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+  @media (max-width:600px){
+    .product-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+    .product-card{ padding:14px 12px 14px; }
+    .product-name{ font-size:15.5px; line-height:1.25; }
+    .product-cat{ font-size:10.5px; letter-spacing:.06em; margin-bottom:8px; }
+    .product-url{ font-size:10.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; overflow-wrap:normal; }
+    .stat-num{ font-size:22px; }
+    .kvl-cols{ gap:20px; margin-bottom:32px; }
+    .credits-row{ flex-direction:column; gap:2px; padding:10px 0; }
+    .credits-val{ text-align:left; }
+    .scene-head h2{ font-size:clamp(28px,8.4vw,40px); }
+    .dek{ font-size:15.5px; }
+    .tag{ font-size:11px; padding:7px 10px; }
+    .os-track{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+    .os-card.flip{ min-height:180px; }
+    .os-name{ font-size:15px; }
+  }
+  @media (max-width:340px){ .product-grid{ grid-template-columns:1fr; } .product-url{ white-space:normal; overflow-wrap:anywhere; } }
+  /* touch: bigger tap targets in the top bar, readable small text */
+  @media (max-width:768px){
+    :root{ --chrome-h:46px; }
+    .chrome-row{ padding:0 10px; }
+    .chrome-mark{ font-size:11px; }
+    .grade-toggle{ font-size:11px; min-height:36px; padding:6px 10px; }
+    .menu-toggle{ min-width:44px; min-height:40px; align-items:center; justify-content:center; padding:10px; }
+    .menu-toggle span{ width:20px; height:2px; }
+    .sound-toggle{ min-width:40px; min-height:36px; }
+    .scene-nav a{ font-size:12.5px; padding:11px 0 11px 14px; }
+    .theme-fab{ right:12px; bottom:calc(var(--letterbox-h) + 12px); }
+    .theme-panel{ right:12px; left:12px; width:auto; bottom:calc(var(--letterbox-h) + 66px); }
+  }
+  @media (max-width:380px){ .chrome-row .eq-bars{ display:none; } .rec-hud{ gap:6px; } }
+  @media (max-width:600px){ .slate-top span{ font-size:10.5px; } }
+  @media (pointer:coarse){
+    .grade-toggle{ min-height:36px; padding:6px 10px; font-size:11px; }
+    .menu-toggle{ min-width:44px; min-height:40px; align-items:center; justify-content:center; }
+    .sound-toggle{ min-width:40px; min-height:36px; }
+    .scene-nav a{ padding-top:10px; padding-bottom:10px; }
+  }
+  /* short landscape phones */
+  @media (max-height:480px) and (orientation:landscape){
+    :root{ --letterbox-h:8px; --chrome-h:40px; }
+    .scene{ padding:56px 0; }
+    .hero{ min-height:auto; padding-top:24px; }
+    .theme-panel{ max-height:calc(100vh - 90px); }
+    .theme-grid{ grid-template-columns:repeat(3,1fr); }
+  }
+  @media (hover:none){ .os-card.flip{ cursor:pointer; } }
   /* ================= THEME SYSTEM ================= */
   html{ background:var(--cine-black); transition:background-color .6s ease; }
   #themeFx{ position:fixed; inset:0; width:100%; height:100%; z-index:0; pointer-events:none; opacity:0; transition:opacity .8s ease; }
   html[data-theme]:not([data-theme="cinema"]) #themeFx{ opacity:1; }
-  #natureBg{ position:fixed; inset:0; width:100%; height:100%; object-fit:cover; object-position:70% 50%; z-index:0; pointer-events:none; display:none; filter:saturate(1.08) contrast(1.05); }
-  #natureBg.on{ display:block; animation:natureIn 1.2s ease both; }
+  #fireBg, #natureBg{ position:fixed; inset:0; width:100%; height:100%; object-fit:cover; object-position:70% 50%; z-index:0; pointer-events:none; display:none; filter:saturate(1.08) contrast(1.05); }
+  #fireBg.on, #natureBg.on{ display:block; animation:natureIn 1.2s ease both; }
   @keyframes natureIn{ from{ opacity:0; transform:scale(1.04); } to{ opacity:1; transform:none; } }
   @media (max-width:700px){ #natureBg{ object-position:78% 50%; } }
+  #fireBg{ object-position:50% 60%; filter:saturate(1.15) contrast(1.08); }
   #themeFxTop{ position:fixed; inset:0; width:100%; height:100%; z-index:4; pointer-events:none; display:none; }
   html[data-theme]:not([data-theme="cinema"]) body{ background:transparent; }
   html[data-theme]:not([data-theme="cinema"]) .grade-toggle#gradeToggle{ display:none; }
@@ -729,9 +823,16 @@
   @keyframes hazard{ to{ background-position:40px 0; } }
   html[data-theme="civil"] h2{ text-transform:uppercase; }
 
-  html[data-theme="fire"] .hero h1{ animation:flicker 2.6s infinite; }
-  @keyframes flicker{ 0%,100%{ text-shadow:0 0 12px #ff6a1a, 0 0 32px #ff3d00, 0 -4px 40px #ffae5c; } 45%{ text-shadow:0 0 8px #ff6a1a, 0 0 22px #ff3d00, 0 -2px 26px #ffcc33; } 50%{ text-shadow:0 0 16px #ff8a3a, 0 0 40px #ff3d00, 0 -6px 50px #ffae5c; } }
   html[data-theme="fire"] h2{ letter-spacing:.04em; }
+  /* fire: frames that burn */
+  html[data-theme="fire"] .photo-frame, html[data-theme="fire"] .os-card.flip.flipped .flip-back{ border-color:#ff7a1a !important; animation:frameBurn 1.4s infinite; }
+  @media (hover:hover){ html[data-theme="fire"] .os-card.flip:hover .flip-back{ border-color:#ff7a1a !important; animation:frameBurn 1.4s infinite; } }
+  @keyframes frameBurn{
+    0%,100%{ box-shadow:0 0 10px 2px rgba(255,120,20,.85), 0 0 34px 10px rgba(255,60,0,.5), inset 0 0 16px rgba(255,100,0,.55); }
+    30%{ box-shadow:0 0 6px 1px rgba(255,150,40,.7), 0 0 26px 8px rgba(255,80,0,.4), inset 0 0 12px rgba(255,120,20,.45); }
+    55%{ box-shadow:0 0 14px 4px rgba(255,100,10,.95), 0 0 46px 14px rgba(255,50,0,.55), inset 0 0 22px rgba(255,90,0,.65); }
+  }
+  @media (prefers-reduced-motion: reduce){ html[data-theme="fire"] h1, html[data-theme="fire"] h2, html[data-theme="fire"] h3, html[data-theme="fire"] .photo-frame, html[data-theme="fire"] .flip-back{ animation:none !important; } }
 
   html[data-theme="snow"] .frame, html[data-theme="snow"] .os-card:not(.flip), html[data-theme="snow"] .product-card, html[data-theme="snow"] .flip-front, html[data-theme="snow"] .stat-row{
     backdrop-filter:blur(10px) saturate(1.2); -webkit-backdrop-filter:blur(10px) saturate(1.2); box-shadow:inset 0 1px 0 rgba(255,255,255,.25); }
@@ -818,6 +919,8 @@
 
 <div class="letterbox letterbox-top"></div>
 <div class="letterbox letterbox-bottom"></div>
+<video id="fireBg" muted loop playsinline preload="none" aria-hidden="true" data-src="fire/bonfire-480.webm" data-poster="fire/bonfire-poster.jpg"></video>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><filter id="heatHaze" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.008 0.045" numOctaves="2" seed="7"><animate attributeName="baseFrequency" dur="5s" values="0.008 0.045;0.011 0.06;0.008 0.045" repeatCount="indefinite"/></feTurbulence><feDisplacementMap in="SourceGraphic" scale="6" xChannelSelector="R" yChannelSelector="G"/></filter></svg>
 <video id="natureBg" muted loop playsinline preload="none" aria-hidden="true" data-src="nature/waterfall-480.webm" data-poster="nature/waterfall-poster.jpg"></video>
 <canvas id="themeFx" aria-hidden="true"></canvas>
 <canvas id="themeFxTop" aria-hidden="true"></canvas>
@@ -828,7 +931,7 @@
 <div class="theme-panel" id="themePanel" role="dialog" aria-label="Choose a theme">
   <h4>Choose a theme</h4>
   <div class="theme-grid" id="themeGrid" role="radiogroup"></div>
-  <p class="theme-credit">Natural Green video: <a href="https://commons.wikimedia.org/wiki/File:Waterfall_on_Falls_Creek,_south_of_Augusta,_Montana_(52974925584).webm" target="_blank" rel="noopener noreferrer">Falls Creek, Montana</a> — USDA Forest Service, public domain.</p>
+  <p class="theme-credit">Fire video: <a href="https://commons.wikimedia.org/wiki/File:Feu.ogv" target="_blank" rel="noopener noreferrer">Feu</a> — Thomas Bresson, CC BY 2.0. Natural Green video: <a href="https://commons.wikimedia.org/wiki/File:Waterfall_on_Falls_Creek,_south_of_Augusta,_Montana_(52974925584).webm" target="_blank" rel="noopener noreferrer">Falls Creek, Montana</a> — USDA Forest Service, public domain.</p>
 </div>
 <div class="whip-pan" id="whipPan" aria-hidden="true"></div>
 <div class="chrome-row">
@@ -1486,7 +1589,7 @@
         </div>
       </div>
     </div>
-    <p class="note-line reveal">Hover a card to see that era's desktop. Desktop images are original stylized illustrations, not screenshots; product names are trademarks of their respective owners.</p>
+    <p class="note-line reveal">Hover (or tap) a card to see that era's desktop. Desktop images are original stylized illustrations, not screenshots; product names are trademarks of their respective owners.</p>
   </section>
 
   <section class="scene" id="scene-hw">
@@ -2252,12 +2355,13 @@
     if(t.id !== "cinema") document.body.classList.remove("grade-daylight");
     if(title) title.textContent = t.title;
     grid.querySelectorAll(".theme-opt").forEach(function(b){ b.setAttribute("aria-checked", b.dataset.theme===t.id ? "true" : "false"); });
-    nature(t.id==="green");
+    themeVideo(t.id);
     FX.start(t.id);
   }
   function setTheme(id, ev){
     store("kaTheme", id);
     if(reduce || !ev){ applyTheme(id); return; }
+    if(id==="fire"){ fireFullBurn=true; applyTheme(id); return; }
     var r = ev.currentTarget.getBoundingClientRect();
     wipe.style.setProperty("--wx", (r.left + r.width/2) + "px");
     wipe.style.setProperty("--wy", (r.top + r.height/2) + "px");
@@ -2266,27 +2370,26 @@
     setTimeout(function(){ applyTheme(id); }, 420);
   }
 
-  var natureVid=document.getElementById("natureBg");
-  function nature(on){
-    if(!natureVid) return;
-    if(on){
-      if(!natureVid.getAttribute("src")){ natureVid.setAttribute("poster", natureVid.dataset.poster); natureVid.setAttribute("src", natureVid.dataset.src); }
-      natureVid.classList.add("on");
-      if(!reduce){ var pr=natureVid.play(); if(pr && pr.catch) pr.catch(function(){}); }
-    } else { natureVid.classList.remove("on"); try{ natureVid.pause(); }catch(e){} }
+  var VIDS={ green:document.getElementById("natureBg"), fire:document.getElementById("fireBg") };
+  function themeVideo(id){
+    Object.keys(VIDS).forEach(function(k){ var v=VIDS[k]; if(!v) return;
+      if(k===id){ if(!v.getAttribute("src")){ v.setAttribute("poster", v.dataset.poster); v.setAttribute("src", v.dataset.src); }
+        v.classList.add("on"); if(!reduce){ var pr=v.play(); if(pr && pr.catch) pr.catch(function(){}); } }
+      else { v.classList.remove("on"); try{ v.pause(); }catch(e){} } });
   }
-  document.addEventListener("visibilitychange", function(){ if(!natureVid || !natureVid.classList.contains("on") || reduce) return; if(document.hidden) natureVid.pause(); else { var p=natureVid.play(); if(p&&p.catch) p.catch(function(){}); } });
+  document.addEventListener("visibilitychange", function(){ var v=VIDS[cur]; if(!v || reduce) return; if(document.hidden) v.pause(); else { var p=v.play(); if(p&&p.catch) p.catch(function(){}); } });
 
   /* ---------- Background FX engine ---------- */
   var cv = document.getElementById("themeFx"), ctx = cv.getContext("2d");
   var W = 0, H = 0, DPR = 1, raf = 0, cur = null, state = null, t0 = 0, scrollY = 0;
   window.addEventListener("scroll", function(){ scrollY = window.scrollY || 0; }, { passive:true });
+  function sizeTop(){ if(!cv2) return; var sc=(cur==="fire")?.5:DPR; cv2.width=Math.round(W*sc); cv2.height=Math.round(H*sc); ctx2.setTransform(sc,0,0,sc,0,0); }
   function resize(){
     DPR = Math.min(window.devicePixelRatio || 1, 1.5);
     W = window.innerWidth; H = window.innerHeight;
     cv.width = Math.round(W*DPR); cv.height = Math.round(H*DPR);
     ctx.setTransform(DPR,0,0,DPR,0,0);
-    if(cv2){ cv2.width=cv.width; cv2.height=cv.height; ctx2.setTransform(DPR,0,0,DPR,0,0); }
+    sizeTop();
     if(cur && SCENES[cur]) { state = SCENES[cur].init(); if(reduce) frame(performance.now()); }
   }
   window.addEventListener("resize", function(){ clearTimeout(resize._t); resize._t = setTimeout(resize, 150); });
@@ -2336,6 +2439,89 @@
     if(surface && Math.random()<.75) s.beads.push({x:x+rnd(-3,3),y:y,r:r*rnd(.55,.8),life:rnd(1.4,3),slide:Math.random()<.3?rnd(2,6):0});
   }
 
+
+  /* ---- fire helpers ---- */
+  var _flameSP=null;
+  function flameSprites(){
+    if(_flameSP) return _flameSP;
+    var stops=[[255,252,230],[255,214,90],[255,140,28],[226,58,10],[110,26,8]];
+    _flameSP=stops.map(function(c,i){ var S=64, o=document.createElement("canvas"); o.width=o.height=S; var x=o.getContext("2d");
+      var g=x.createRadialGradient(S/2,S*.62,0,S/2,S*.62,S/2);
+      g.addColorStop(0,"rgba("+c+","+(i===4?.3:1)+")"); g.addColorStop(.3,"rgba("+c+","+(i===4?.18:.6)+")"); g.addColorStop(.7,"rgba("+c+","+(i===4?.06:.18)+")"); g.addColorStop(1,"rgba("+c+",0)");
+      x.fillStyle=g; x.beginPath(); x.moveTo(S/2,0); x.bezierCurveTo(S*.95,S*.35,S,S*.95,S/2,S); x.bezierCurveTo(0,S*.95,S*.05,S*.35,S/2,0); x.fill(); return o; });
+    return _flameSP;
+  }
+  var FIRE_BIG="h1, h2", FIRE_SMALL="h3, .product-name, .os-name, .kvl-year, .stat-num, .beat-num, .credits-title";
+  function fireTargets(minTop){
+    var txt=[], img=[], rg=document.createRange();
+    function lines(sel,big){ var els=document.querySelectorAll(sel); for(var i=0;i<els.length;i++){ var el=els[i]; if(skip(el)) continue; var br=el.getBoundingClientRect(); if(br.bottom<minTop||br.top>H) continue;
+      rg.selectNodeContents(el); var rs=rg.getClientRects(); for(var k=0;k<rs.length;k++){ var r=rs[k]; if(r.width<6||r.height<6||r.top<minTop||r.bottom>H) continue; txt.push({left:r.left,right:r.right,top:r.top,h:r.height,big:big}); } } }
+    var fr=document.querySelectorAll(".photo-frame, .os-card.flip.flipped, .os-card.flip:hover");
+    for(var j=0;j<fr.length;j++){ var q=fr[j].getBoundingClientRect(); if(q.width<30||q.bottom<minTop||q.top>H) continue; img.push({left:q.left,right:q.right,top:Math.max(q.top,minTop),bottom:Math.min(q.bottom,H)}); }
+    return {txt:txt.slice(0,40), img:img.slice(0,8)};
+  }
+
+
+  /* ---- fire extras: burns, smoke, sparks, pointer, fuse ---- */
+  var fireState=null, fireFullBurn=false, fireIO=null;
+  function hash2(x,y,sd){ var h=Math.sin(x*127.1+y*311.7+sd*74.7)*43758.5453; return h-Math.floor(h); }
+  function vnoise(x,y,sd){ var xi=Math.floor(x), yi=Math.floor(y), xf=x-xi, yf=y-yi, u=xf*xf*(3-2*xf), v=yf*yf*(3-2*yf);
+    var a=hash2(xi,yi,sd), b=hash2(xi+1,yi,sd), c=hash2(xi,yi+1,sd), d=hash2(xi+1,yi+1,sd); return a+(b-a)*u+(c-a)*v+(a-b-c+d)*u*v; }
+  var _smoke=null;
+  function smokeSprite(){ if(_smoke) return _smoke; var S=64, o=document.createElement("canvas"); o.width=o.height=S; var x=o.getContext("2d"), g=x.createRadialGradient(S/2,S/2,0,S/2,S/2,S/2);
+    g.addColorStop(0,"rgba(120,110,104,.85)"); g.addColorStop(.5,"rgba(90,82,78,.42)"); g.addColorStop(1,"rgba(60,54,50,0)"); x.fillStyle=g; x.fillRect(0,0,S,S); _smoke=o; return o; }
+  var fuseEl=document.getElementById("filmProgress");
+  function fuseHead(){ if(!fuseEl) return null; var r=fuseEl.getBoundingClientRect(); return {x:r.right, y:r.top+r.height/2, w:r.width}; }
+  var PTR={x:-99,y:-99,vx:0,vy:0,moved:0,bursts:[]};
+  window.addEventListener("pointermove",function(e){ if(e.pointerType!=="mouse") return; PTR.vx=(e.clientX-PTR.x)*30; PTR.vy=(e.clientY-PTR.y)*30; PTR.x=e.clientX; PTR.y=e.clientY; PTR.moved=.08; },{passive:true});
+  window.addEventListener("pointerdown",function(e){ if(cur!=="fire"||reduce) return; if(PTR.bursts.length<4) PTR.bursts.push([e.clientX,e.clientY]); },{passive:true});
+  function lap(card){ if(cur==="fire" && fireState && !reduce && fireState.laps.length<4) fireState.laps.push({el:card,age:0}); }
+  document.querySelectorAll(".os-card.flip").forEach(function(c){
+    c.addEventListener("mouseenter",function(){ if(window.matchMedia("(hover:hover)").matches) lap(c); });
+    c.addEventListener("click",function(){ setTimeout(function(){ if(c.classList.contains("flipped")) lap(c); },0); });
+  });
+  function fireObserve(){
+    if(reduce || !("IntersectionObserver" in window)) return;
+    if(fireFullBurn && fireState){ fireFullBurn=false; fireState.burns.push({el:null,age:0,dur:1.7,ox:.5,oy:.95,seed:Math.random()*100}); }
+    if(fireIO) fireIO.disconnect();
+    var first=true;
+    fireIO=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ var el=en.target;
+        if(first){ if(en.isIntersecting) el._burnt=true; return; }
+        if(en.isIntersecting && !el._burnt && cur==="fire" && fireState){ el._burnt=true; fireState.burns.push({el:el,age:0,dur:1.5,ox:Math.random()*.4+.3,oy:0,seed:Math.random()*100}); }
+      });
+      first=false;
+    },{threshold:0});
+    document.querySelectorAll(".scene").forEach(function(sc){ sc._burnt=false; fireIO.observe(sc); });
+  }
+  var burnCv=document.createElement("canvas"), burnCtx=burnCv.getContext("2d");
+  function drawBurns(s,c2,t,dt,top){
+    for(var i=s.burns.length-1;i>=0;i--){ var B=s.burns[i]; B.age+=dt; var pr=B.age/B.dur; if(pr>=1){ s.burns.splice(i,1); continue; }
+      var R = B.el ? B.el.getBoundingClientRect() : {left:0,top:top,right:W,bottom:H,width:W,height:H-top};
+      var x0=Math.max(0,R.left), x1=Math.min(W,R.right), y0=Math.max(top,R.top), y1=Math.min(H,R.bottom); if(x1<=x0||y1<=y0) continue;
+      var ox=R.left+R.width*B.ox, oy=B.el ? R.top+Math.min(R.height,H)*.12 : R.top+R.height*B.oy;
+      var D=Math.max(H,760), p=pr*1.22+.03, sc=s.mobile?5:6;            // 1 low-res pixel = sc css px
+      var bw=Math.ceil((x1-x0)/sc), bh=Math.ceil((y1-y0)/sc); if(bw<1||bh<1) continue;
+      if(burnCv.width!==bw||burnCv.height!==bh){ burnCv.width=bw; burnCv.height=bh; }
+      var img=burnCtx.createImageData(bw,bh), d=img.data;
+      for(var py=0;py<bh;py++){ var y=y0+py*sc, ly=(y-R.top)*.0105;
+        for(var px=0;px<bw;px++){ var x=x0+px*sc, lx=(x-R.left)*.0105;
+          var n=vnoise(lx,ly,B.seed)*.6+vnoise(lx*2.9,ly*2.9,B.seed+3)*.28+vnoise(lx*7,ly*7,B.seed+9)*.12;
+          var dx=x-ox, dy=y-oy, dist=Math.min(1,Math.sqrt(dx*dx+dy*dy)/D), e=.56*dist+.44*n-p, o=(py*bw+px)*4;
+          if(e<0){ d[o+3]=0; continue; }
+          if(e<.018){ var k=e/.018; d[o]=255; d[o+1]=(236-110*k)|0; d[o+2]=(150-120*k)|0; d[o+3]=255; }          // white-hot edge
+          else if(e<.045){ var k2=(e-.018)/.027; d[o]=(255-120*k2)|0; d[o+1]=(126-90*k2)|0; d[o+2]=(30-22*k2)|0; d[o+3]=255; } // glowing ember
+          else if(e<.10){ var k3=(e-.045)/.055; d[o]=(62-48*k3)|0; d[o+1]=(26-20*k3)|0; d[o+2]=(10-8*k3)|0; d[o+3]=255; }   // scorched paper
+          else { var g=(hash2(px,py,B.seed)*6)|0; d[o]=12+g; d[o+1]=5+(g>>1); d[o+2]=2; d[o+3]=255; }                     // charred paper
+        } }
+      burnCtx.putImageData(img,0,0);
+      c2.save(); c2.imageSmoothingEnabled=true; c2.imageSmoothingQuality="high"; c2.globalCompositeOperation="source-over";
+      c2.drawImage(burnCv,0,0,bw,bh,x0,y0,bw*sc,bh*sc);
+      // bloom on the burning edge
+      c2.globalCompositeOperation="lighter"; c2.globalAlpha=.55; c2.filter="blur(4px)"; c2.drawImage(burnCv,0,0,bw,bh,x0,y0,bw*sc,bh*sc); c2.filter="none"; c2.globalAlpha=1;
+      c2.restore();
+    }
+  }
   var SCENES = {
     space: {
       init: function(){
@@ -2446,12 +2632,22 @@
       }
     },
     fire: {
-      init: function(){ var s={e:[]}; for(var i=0;i<density(5000);i++) s.e.push(this.spawn(true)); return s; },
-      spawn: function(any){ return {x:Math.random()*W,y:any?Math.random()*H:H+10,vy:rnd(30,90),vx:rnd(-12,12),r:rnd(.8,2.6),life:rnd(.5,1),ph:Math.random()*6}; },
+      init: function(){
+        var s={e:[]}; for(var i=0;i<density(9000);i++) s.e.push(this.spawn(true));
+        s.fl=[]; s.smoke=[]; s.sparks=[]; s.burns=[]; s.laps=[]; s.rectAge=1; s.txt=[]; s.img=[]; s.acc={};
+        s.mobile=W<700; s.cap=s.mobile?520:1300;
+        fireState=s; fireObserve();
+        return s;
+      },
+      spawn: function(any){ return {x:Math.random()*W,y:any?Math.random()*H:H+10,vy:rnd(30,90),vx:rnd(-12,12),r:rnd(.8,2.2),life:rnd(.5,1),ph:Math.random()*6}; },
       draw: function(s,t,dt){
-        ctx.fillStyle="#0d0503"; ctx.fillRect(0,0,W,H);
+        // the bonfire video sits behind; add a readability veil, a warm glow and a few drifting embers
+        ctx.clearRect(0,0,W,H);
+        var nv=W<700, veil=ctx.createLinearGradient(0,0,W,0);
+        veil.addColorStop(0,"rgba(8,3,1,"+(nv?.8:.78)+")"); veil.addColorStop(.55,"rgba(8,3,1,"+(nv?.7:.55)+")"); veil.addColorStop(1,"rgba(8,3,1,"+(nv?.55:.35)+")");
+        ctx.fillStyle=veil; ctx.fillRect(0,0,W,H);
         var fl=.85+.15*Math.sin(t*7)*Math.sin(t*3.1);
-        var g=ctx.createRadialGradient(W/2,H*1.15,0,W/2,H*1.15,H*.95); g.addColorStop(0,"rgba(255,140,40,"+(.55*fl)+")"); g.addColorStop(.35,"rgba(220,60,10,"+(.32*fl)+")"); g.addColorStop(1,"rgba(13,5,3,0)");
+        var g=ctx.createRadialGradient(W/2,H*1.15,0,W/2,H*1.15,H*.95); g.addColorStop(0,"rgba(255,120,30,"+(.22*fl)+")"); g.addColorStop(1,"rgba(13,5,3,0)");
         ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
         ctx.globalCompositeOperation="lighter";
         for(var i=0;i<s.e.length;i++){ var e=s.e[i]; e.y-=e.vy*dt; e.x+=(e.vx+Math.sin(t*2+e.ph)*14)*dt; e.life-=dt*.12;
@@ -2459,6 +2655,84 @@
           var a=Math.max(0,e.life)*(.6+.4*Math.sin(t*9+e.ph)); var hue=20+40*(e.y/H);
           ctx.fillStyle="hsla("+hue+",100%,60%,"+a+")"; ctx.beginPath(); ctx.arc(e.x,e.y,e.r,0,6.283); ctx.fill(); }
         ctx.globalCompositeOperation="source-over";
+      },
+      drawTop: function(s,t,dt,c2){
+        c2.clearRect(0,0,W,H);
+        var top=chromeBottom(), SP=flameSprites(), m=s.mobile?.55:1;
+        s.rectAge+=dt; if(s.rectAge>.25){ s.rectAge=0; var tg=fireTargets(top); s.img=tg.img; }
+        function emit(key, rate, fn){ s.acc[key]=(s.acc[key]||0)+rate*dt*m; while(s.acc[key]>=1){ s.acc[key]-=1; if(s.fl.length<s.cap) fn(); } }
+        function add(x,y,size,life,vx,vy,heat){ s.fl.push({x:x,y:y,s:size,life:life,age:0,vx:vx,vy:vy,ph:Math.random()*6.28,heat:heat}); }
+        function perim(r,u){ var w=r.right-r.left, h=r.bottom-r.top; u=((u%(2*(w+h)))+2*(w+h))%(2*(w+h));
+          if(u<w) return [r.left+u, r.top]; if(u<w+h) return [r.right, r.top+(u-w)]; if(u<2*w+h) return [r.right-(u-w-h), r.bottom]; return [r.left, r.bottom-(u-2*w-h)]; }
+        function spark(x,y,vx,vy,life){ if(s.sparks.length<(s.mobile?160:320)) s.sparks.push({x:x,y:y,px:x,py:y,vx:vx,vy:vy,life:life,age:0}); }
+
+
+        /* --- 2. smoke rising off burning frames --- */
+        var SM=smokeSprite();
+        for(var j0=0;j0<s.img.length;j0++){ (function(r,j){ s.acc["sm"+j]=(s.acc["sm"+j]||0)+dt*(s.mobile?3:6);
+          while(s.acc["sm"+j]>=1){ s.acc["sm"+j]-=1; if(s.smoke.length<60) s.smoke.push({x:r.left+Math.random()*(r.right-r.left), y:r.top-6, r:rnd(14,24), vx:rnd(-8,8), vy:-rnd(22,40), life:rnd(2.6,3.8), age:0, ph:Math.random()*6}); } })(s.img[j0],j0); }
+        for(var sm=s.smoke.length-1;sm>=0;sm--){ var sp=s.smoke[sm]; sp.age+=dt; var sq=sp.age/sp.life; if(sq>=1){ s.smoke.splice(sm,1); continue; }
+          sp.x+=(sp.vx+Math.sin(t*.8+sp.ph)*10)*dt; sp.y+=sp.vy*dt; var rr=sp.r*(1+sq*2.4);
+          c2.globalAlpha=.42*(sq<.15? sq/.15 : 1-sq); c2.drawImage(SM, sp.x-rr, sp.y-rr, rr*2, rr*2); }
+        c2.globalAlpha=1;
+
+        /* --- frames: steady fire + flames running round the border --- */
+        for(var j=0;j<s.img.length;j++){ (function(r,j){
+          var w=r.right-r.left, h=r.bottom-r.top, per=2*(w+h);
+          emit("i"+j, per*.5, function(){ var pt=perim(r,Math.random()*per); add(pt[0]+rnd(-3,3), pt[1]+rnd(-3,3), rnd(11,17), rnd(.32,.6), rnd(-6,6), -rnd(30,60), .9); });
+          var speed=per/3.5;
+          for(var rn=0;rn<2;rn++){ (function(rn){
+            var head=t*speed+rn*per/2;
+            emit("run"+j+"_"+rn, 170, function(){ var back=Math.pow(Math.random(),1.5)*130, pt=perim(r,head-back), k=1-back/130;
+              add(pt[0]+rnd(-4,4), pt[1]+rnd(-4,4), rnd(18,28)*(.55+.6*k), rnd(.4,.7), rnd(-8,8), -rnd(55,100)*(.7+.5*k), 1); });
+            c2.save(); c2.globalCompositeOperation="lighter"; c2.lineCap="round";
+            for(var seg=0;seg<24;seg++){ var p1=perim(r,head-seg*6), p2=perim(r,head-(seg+1)*6), al=(1-seg/24);
+              c2.strokeStyle="rgba(255,"+Math.max(80,230-seg*7)+","+Math.max(10,120-seg*5)+","+al+")"; c2.lineWidth=6-seg*.2; c2.beginPath(); c2.moveTo(p1[0],p1[1]); c2.lineTo(p2[0],p2[1]); c2.stroke(); }
+            c2.restore();
+          })(rn); }
+          c2.save(); c2.globalCompositeOperation="lighter"; c2.strokeStyle="rgba(255,110,20,"+(.35+.08*Math.sin(t*9+j))+")"; c2.lineWidth=2; c2.strokeRect(r.left,r.top,w,h); c2.restore();
+        })(s.img[j],j); }
+
+        /* --- 8. one fast lap of flame round a card when it flips --- */
+        for(var L=s.laps.length-1;L>=0;L--){ var lp=s.laps[L]; lp.age+=dt; var lq=lp.age/1.1; if(lq>=1){ s.laps.splice(L,1); continue; }
+          var lr=lp.el.getBoundingClientRect(); if(lr.bottom<top||lr.top>H) continue;
+          var R={left:lr.left,right:lr.right,top:lr.top,bottom:lr.bottom}, lper=2*(lr.width+lr.height), lhead=lq*lper;
+          for(var n=0;n<Math.ceil(220*dt);n++){ var b=Math.pow(Math.random(),1.4)*90, pt=perim(R,lhead-b), kk=1-b/90; add(pt[0]+rnd(-3,3), pt[1]+rnd(-3,3), rnd(16,26)*(.5+.6*kk), rnd(.35,.6), rnd(-8,8), -rnd(60,110), 1); }
+          c2.save(); c2.globalCompositeOperation="lighter"; c2.lineCap="round";
+          for(var sg=0;sg<18;sg++){ var q1=perim(R,lhead-sg*7), q2=perim(R,lhead-(sg+1)*7); c2.strokeStyle="rgba(255,"+(220-sg*8)+",80,"+(1-sg/18)+")"; c2.lineWidth=5-sg*.2; c2.beginPath(); c2.moveTo(q1[0],q1[1]); c2.lineTo(q2[0],q2[1]); c2.stroke(); }
+          c2.restore(); }
+
+        /* --- 3. burning fuse: sparks falling from the progress-bar head --- */
+        var fp=fuseHead();
+        if(fp && fp.w>4){ s.acc.fuse=(s.acc.fuse||0)+dt*(s.mobile?22:40); while(s.acc.fuse>=1){ s.acc.fuse-=1; spark(fp.x, fp.y, rnd(-60,90), rnd(-40,40), rnd(.35,.8)); } }
+
+        /* --- 4. ember cursor --- */
+        if(PTR.moved>0){ PTR.moved-=dt; s.acc.cur=(s.acc.cur||0)+dt*(s.mobile?0:45); while(s.acc.cur>=1){ s.acc.cur-=1; spark(PTR.x+rnd(-3,3), PTR.y+rnd(-3,3), rnd(-40,40)-PTR.vx*.08, -rnd(20,90)-PTR.vy*.05, rnd(.35,.75)); } }
+        while(PTR.bursts.length){ var bp=PTR.bursts.shift(); for(var bb=0;bb<(s.mobile?18:30);bb++){ var ang=Math.random()*6.283, sp2=rnd(80,320); spark(bp[0], bp[1], Math.cos(ang)*sp2, Math.sin(ang)*sp2-60, rnd(.4,1)); } }
+
+        /* --- flames render --- */
+        c2.globalCompositeOperation="lighter";
+        for(var k=s.fl.length-1;k>=0;k--){ var p=s.fl[k]; p.age+=dt; var q=p.age/p.life;
+          if(q>=1){ s.fl[k]=s.fl[s.fl.length-1]; s.fl.pop(); continue; }
+          p.vy-=150*dt;
+          var turb=Math.sin(p.y*.045+t*7+p.ph)*24+Math.sin(p.y*.11-t*11+p.ph*2)*10;
+          p.x+=(p.vx+turb*q)*dt; p.y+=p.vy*dt;
+          var grow=q<.15? q/.15 : 1, size=p.s*grow*(1-q*.75);
+          var stage=q<.12?0:q<.32?1:q<.58?2:q<.82?3:4;
+          var a=(q<.12? .95 : Math.pow(1-q,1.05))*p.heat*(.82+.18*Math.sin(t*19+p.ph));
+          if(size<.6||a<=0.01) continue;
+          c2.globalAlpha=Math.min(1,a); var fw=size*1.15, fh=size*(2.2+q*1.2);
+          c2.drawImage(SP[stage], p.x-fw/2, p.y-fh*.75, fw, fh);
+        }
+        /* --- sparks render: short glowing streaks with gravity --- */
+        c2.lineCap="round";
+        for(var z=s.sparks.length-1;z>=0;z--){ var sk=s.sparks[z]; sk.age+=dt; var zq=sk.age/sk.life; if(zq>=1){ s.sparks[z]=s.sparks[s.sparks.length-1]; s.sparks.pop(); continue; }
+          sk.px=sk.x; sk.py=sk.y; sk.vy+=420*dt; sk.vx*=1-1.2*dt; sk.x+=sk.vx*dt; sk.y+=sk.vy*dt;
+          c2.globalAlpha=Math.max(0,1-zq); c2.strokeStyle=zq<.3?"#fff4c8":zq<.65?"#ffc040":"#ff6a1a"; c2.lineWidth=zq<.3?2.2:1.6;
+          c2.beginPath(); c2.moveTo(sk.px,sk.py); c2.lineTo(sk.x+(sk.x-sk.px)*.6, sk.y+(sk.y-sk.py)*.6); c2.stroke(); }
+        c2.globalAlpha=1; c2.globalCompositeOperation="source-over";
+        /* --- 6. paper-burn reveals, on top of everything --- */
+        drawBurns(s,c2,t,dt,top);
       }
     },
     snow: {
@@ -2671,8 +2945,8 @@
   }
   var FX = {
     start: function(id){
-      cancelAnimationFrame(raf); raf=0; cur=id; ctx.clearRect(0,0,W,H);
-      if(ctx2){ ctx2.clearRect(0,0,W,H); cv2.style.display = (SCENES[id] && SCENES[id].drawTop) ? "block" : "none"; }
+      cancelAnimationFrame(raf); raf=0; cur=id; if(id!=="fire"){ fireState=null; if(fireIO){ fireIO.disconnect(); fireIO=null; } } ctx.clearRect(0,0,W,H);
+      if(ctx2){ sizeTop(); ctx2.clearRect(0,0,W,H); cv2.style.display = (SCENES[id] && SCENES[id].drawTop) ? "block" : "none"; }
       if(!SCENES[id]){ state=null; return; }
       if(!W) resize(); state=SCENES[id].init(); t0=last=performance.now();
       if(reduce) frame(t0); else raf=requestAnimationFrame(frame);
@@ -2684,6 +2958,21 @@
   var saved = store("kaTheme");
   var q = (location.search.match(/[?&]theme=([a-z]+)/) || [])[1];
   applyTheme(q && byId[q] ? q : (saved && byId[saved] ? saved : "cinema"));
+})();
+</script>
+<script>
+(function(){
+  var cards=document.querySelectorAll('.os-card.flip');
+  cards.forEach(function(c){
+    c.addEventListener('click',function(e){
+      if(window.matchMedia('(hover:hover)').matches) return;
+      var on=!c.classList.contains('flipped');
+      cards.forEach(function(o){ o.classList.remove('flipped'); });
+      if(on) c.classList.add('flipped');
+    });
+    c.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); c.classList.toggle('flipped'); } });
+  });
+  document.addEventListener('click',function(e){ if(!e.target.closest('.os-card.flip')) cards.forEach(function(o){ o.classList.remove('flipped'); }); });
 })();
 </script>
 </body>
